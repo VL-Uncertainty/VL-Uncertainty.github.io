@@ -1,6 +1,6 @@
 # VL-Uncertainty
 
-This is the repository that contains source code for the [VL-Uncertainty website](https://ruiyang-061x.github.io/vl-uncertainty-website/).
+This is the repository that contains source code for the [VL-Uncertainty website](https://vl-uncertainty.github.io/).
 
 If you find VL-Uncertainty useful for your work please cite:
 ```
