@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="VL-Uncertainty: Detecting Hallucination in Large Vision-Language Model via Uncertainty Estimation">
+  <meta name="keywords" content="VL-Uncertainty, LVLM, Uncertainty, Hallucination Detection">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>VL-Uncertainty: Detecting Hallucination in Large Vision-Language Model via Uncertainty Estimation</title>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-PYVRSFMDRL');
+  </script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/logo.png">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+<body>
+
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <div class="navbar-menu">
+    <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
+      <a class="navbar-item" href="https://ruiyang-061x.github.io/">
+      <span class="icon">
+          <i class="fas fa-home"></i>
+      </span>
+      </a>
+
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link">
+          More Research
+        </a>
+        <div class="navbar-dropdown">
+          <a class="navbar-item" href="https://github.com/Ruiyang-061X/UA3D">
+            UA3D
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</nav>
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">VL-Uncertainty: Detecting Hallucination in Large Vision-Language Model via Uncertainty Estimation</h1>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://ruiyang-061x.github.io/">Ruiyang Zhang</a><sup>1</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://huzhangcs.github.io/">Hu Zhang</a><sup>2</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://www.zdzheng.xyz/">Zhedong Zheng</a><sup>1</sup>,
+            </span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>1</sup>University of Macau,</span>
+            <span class="author-block"><sup>2</sup>CSIRO Data61</span>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <span class="link-block">
+                <a href="https://arxiv.org/pdf/2411.11919v1"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="https://arxiv.org/abs/2411.11919v1"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <!-- Code Link. -->
+              <span class="link-block">
+                <a href="https://github.com/Ruiyang-061X/VL-Uncertainty"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                  </a>
+              </span>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            Given the higher information load processed by large vision-language models (LVLMs) compared to single-modal LLMs, detecting LVLM hallucinations requires more human and time expense, and thus rise a wider safety concerns. In this paper, we introduce <span class="dnerf">VL-Uncertainty</span>, the first uncertainty-based framework for detecting hallucinations in LVLMs. Different from most existing methods that require ground-truth or pseudo annotations, <span class="dnerf">VL-Uncertainty</span> utilizes uncertainty as an intrinsic metric. We measure uncertainty by analyzing the prediction variance across semantically equivalent but perturbed prompts, including visual and textual data. When LVLMs are highly confident, they provide consistent responses to semantically equivalent queries. However, when uncertain, the responses of the target LVLM become more random. Considering semantically similar answers with different wordings, we cluster LVLM responses based on their semantic content and then calculate the cluster distribution entropy as the uncertainty measure to detect hallucination. Our extensive experiments on 10 LVLMs across four benchmarks, covering both free-form and multi-choice tasks, show that <span class="dnerf">VL-Uncertainty</span> significantly outperforms strong baseline methods in hallucination detection.
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+
+    <!-- Motivation. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Motivation</h2>
+        <div class="content has-text-justified">
+          <img src="static/images/motivation.png" width=100%>
+          <p>
+            <b>Motivation.</b> External evaluator-based methods usually suffer from knowledge missing when it comes to new domains (see (a)). In contrast, our <span class="dnerf">VL-Uncertainty</span> elicits intrinsic uncertainty of LVLM through proposed semantic-equivalent perturbation. Finally, refined uncertainty estimation facilitates reliable LVLM hallucination detection (see (b)).
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--/ Motivation. -->
+
+    <!-- Method. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Method</h2>
+        <div class="content has-text-justified">
+          <img src="static/images/method.png" width=100%>
+          <p>
+            <b>Overall illustration of our proposed <span class="dnerf">VL-Uncertainty</span>.</b> To facilitate mining of uncertainty arising from various modalities, we apply semantic-equivalent perturbations <b><i>(left)</i></b> to both visual and textual prompts. For visual prompt, the original image is blurred to varying degrees, mimicking human visual perception. For textual prompt, pre-trained LLM is prompted to rephrase the original question in semantic-equivalent manner with different temperatures. Detailed instruction is designed to achieve question rephrasing with the original semantic preserved. Prompt pairs with varying degrees of perturbation are harnessed to effectively elicit LVLM uncertainty. We cluster LVLM answer set by semantic meaning and utilize entropy of answer cluster distribution as LVLM uncertainty <b><i>(right)</i></b>. The estimated uncertainty serves as a continuous indicator of different levels of LVLM hallucination.
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--/ Method. -->
+
+    <!-- Comparison with State-of-the-arts. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Comparison with State-of-the-arts</h2>
+        <div class="content has-text-justified">
+          <img src="static/images/results.png" width=100%>
+          <p>
+            <b>Comparison with state-of-the-arts on both free-form benchmark (MM-Vet and LLaVABench) and multi-choice benchmark (MMMU and ScienceQA) for LVLM hallucination detection.</b> Our <span class="dnerf">VL-Uncertainty</span> yields significant improvements over strong baselines. This validates the efficacy of our proposed semantic-equivalent perturbation in eliciting and estimating LVLM uncertainty more accurately, which further facilitates LVLM hallucination detection. The reported results are hallucination detection accuracy. We re-implement semantic entropy within vision-language context.
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--/ Comparison with State-of-the-arts. -->
+
+    <!-- Qualitative Analysis. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Qualitative Analysis</h2>
+        <div class="content has-text-justified">
+          <img src="static/images/qualitative.png" width=100%>
+          <p>
+            <b>Qualitative comparison between <span class="dnerf">VL-Uncertainty</span> and baselines.</b> We present a sample from free-form benchmark. For this hallucinatory sample, pseudo-annotation-based method fails to interpret the hidden-behind logic and thus misses detecting hallucination (see (a)). On the other hand, for semantic-entropy, vanilla multi-sampling proves ineffective for mining LVLM uncertainty (see (b)). In contrast, our proposed semantic-equivalent perturbation on both visual and textual prompts successfully elicits LVLM uncertainty. This refined uncertainty estimation enhances the successful detection of LVLM hallucination (see (c)).
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--/ Qualitative Analysis. -->
+
+  </div>
+</section>
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>
+      @article{zhang2024vl,
+        title={VL-Uncertainty: Detecting Hallucination in Large Vision-Language Model via Uncertainty Estimation},
+        author={Zhang, Ruiyang and Zhang, Hu and Zheng, Zhedong},
+        journal={arXiv preprint arXiv:2411.11919},
+        year={2024}
+      }
+    </code></pre>
+  </div>
+</section>
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      <a class="icon-link"
+         href="./static/videos/VL-Uncertainty.pdf">
+        <i class="fas fa-file-pdf"></i>
+      </a>
+      <a class="icon-link" href="https://ruiyang-061x.github.io/" class="external-link" disabled>
+        <i class="fab fa-github"></i>
+      </a>
+    </div>
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This website is licensed under a <a rel="license"
+                                                href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>. Thanks for website code of <a
+            href="https://github.com/nerfies/nerfies.github.io">Nerfies</a>!
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
